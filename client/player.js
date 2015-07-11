@@ -58,27 +58,30 @@ Player.prototype.render = function(){
   var startingPos = [gameOptions.width/2, gameOptions.height/2];
   this.transform(startingPos);
   // Player is in the center, now setup dragging to move him/her around
+  this.setupDragging();
 };
 
 Player.prototype.transform = function(optionalCoordArray){
   if(optionalCoordArray){ 
     this.setCoordinates(optionalCoordArray)
   }
-  //debugger;
   this.playerElement.attr("transform", "translate("+ this._x + ","+ this._y+")");
+};
 
-  // @el.attr 'transform',
-  //     "rotate(#{@angle},#{@getX()},#{@getY()}) "+
-  //     "translate(#{@getX()},#{@getY()})"
-
+Player.prototype.moveRelative = function(dArray){ 
+  var currentCoords = this.getCoordinates();
+  var newCoords = [dArray[0] + currentCoords[0], dArray[1] + currentCoords[1]];
+  this.transform(newCoords);
 };
 
 Player.prototype.setupDragging = function(){
-  // dragMove = =>
-  //     @moveRelative(d3.event.dx, d3.event.dy)
-
-  //   drag = d3.behavior.drag()
-  //           .on('drag', dragMove)
-  //   @el.call(drag)
+    var drag = d3.behavior.drag()
+            .on('drag', this.dragMove.bind(this));
+    this.playerElement.call(drag);
 
 };
+Player.prototype.dragMove = function(){ 
+  this.moveRelative([d3.event.dx, d3.event.dy]);
+};  
+  
+ 
