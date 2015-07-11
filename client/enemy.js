@@ -12,7 +12,7 @@ Enemy.prototype.getCoordinates = function(){
 
 Enemy.prototype.changeLocation = function(){
   var context = this;
-  setTimeout(function(){context.changeLocation()}, 2000);
+  setTimeout(function(){context.changeLocation()}, 1000);
   context._x = randomXCoordinate();
   context._y = randomYCoordinate();
 }

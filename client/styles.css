@@ -2,3 +2,41 @@
 
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
+body{ 
+  background-color: lightblue;
+  font-family: "Comic Sans MS";
+}
+
+svg {
+  opacity: 1;
+  text-align: center;
+  background-image: url(dogeBg.jpg);
+  /*border-color: #FFF;*/
+}
+
+.board{ 
+  text-align: center;
+}
+
+.high{
+  color: red;
+  margin-left: 5%;
+}
+
+.current{ 
+  color:green;
+  margin-left: 5%;
+}
+
+.collisions{ 
+  color:blue;
+  margin-left: 5%;
+}
+.scoreboard{
+  text-align: left;
+  margin-left: 28.5%;
+  margin-right: 62%;
+  background-color: rgb(255, 205, 214);
+  margin-bottom: 5px;
+  margin-top: 5px;
+}

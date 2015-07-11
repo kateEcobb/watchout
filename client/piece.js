@@ -43,6 +43,7 @@ Piece.prototype.render = function(){
             .attr("xlink:href", this.path)
             .attr("height", "50")
             .attr("width", "30")
+            .attr("id", "marcus")
 
   this.transform(this.startingPos);
 };
