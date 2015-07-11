@@ -39,11 +39,74 @@ var updateCollisions = function(){
   d3.select('.collisions').select('span').text(gameStats.collisions)
 };
 
+var randomYCoordinate = function(){
+  return Math.random() * gameOptions.height;
+}
+
+var randomXCoordinate = function(){
+  return Math.random() * gameOptions.width;
+}
+
 // Setup the game
 var player = new Player();
-var doges = [];
-for(var i = 0; i < gameOptions.nEnemies; i++){
-  doges.push(new Enemy());
+
+// Doges
+var Doge = function(id){
+  this.id = id;
+  this._x = randomXCoordinate();
+  this._y = randomYCoordinate();
 }
+
+var createEnemies = function(){
+  var enemyArray = [];
+  for(var i = 0; i < gameOptions.nEnemies; i++){
+    enemyArray.push(new Enemy(i));
+  }
+  return enemyArray
+}
+
+var enemies = createEnemies();
+
+var update = function(){
+  var selection = gameBoard.selectAll('.doge')
+    .data(enemies, function(d){return d.id;});
+  
+  selection.transition().duration(1600)
+    .attr("x", function(d){return d._x;})
+    .attr("y", function(d){return d._y;})
+
+  selection.enter().append('svg:image')
+    .attr("xlink:href", function(d){return d.path;})
+    .attr("height", "24.5")
+    .attr("width", "23")
+    .attr("x", function(d){return d._x;})
+    .attr("y", function(d){return d._y;})
+    .attr("class", "doge");
+
+
+}
+
+var fly = function(){
+  setTimeout(function(){fly()}, 2000);
+  update();
+}
+
+fly();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
