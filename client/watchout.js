@@ -38,3 +38,12 @@ var updateHighScore = function(){
 var updateCollisions = function(){
   d3.select('.collisions').select('span').text(gameStats.collisions)
 };
+
+// Setup the game
+var player = new Player();
+var doges = [];
+for(var i = 0; i < gameOptions.nEnemies; i++){
+  doges.push(new Enemy());
+}
+
+
