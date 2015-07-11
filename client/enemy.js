@@ -2,9 +2,13 @@ var Enemy = function(id){
   this.id = id;
   this._x = randomXCoordinate();
   this._y = randomYCoordinate();
-  this.path = "http://pre10.deviantart.net/2783/th/pre/f/2014/028/0/f/doge_vector_by_falloutgirl9001-d74335n.png"
+  this.path = "doge.png"
   this.changeLocation();
 }
+
+Enemy.prototype.getCoordinates = function(){
+  return [this._x,this._y];
+};
 
 Enemy.prototype.changeLocation = function(){
   var context = this;
