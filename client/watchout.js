@@ -3,8 +3,8 @@
 var gameOptions = {
   height: 450,
   width: 700,
-  padding: 20,
-  nEnemies: 3
+  padding: 0,
+  nEnemies: 15
 };
 
 var gameStats = {
@@ -13,15 +13,15 @@ var gameStats = {
   collisions: 0
 }
 
-var axes ={  
-  x: d3.scale.linear().domain([0,100]).range([0,gameOptions.width]),
-  y: d3.scale.linear().domain([0,100]).range([0,gameOptions.height])
-}
+// var axes ={  
+//   x: d3.scale.linear().domain([0,100]).range([0,gameOptions.width]),
+//   y: d3.scale.linear().domain([0,100]).range([0,gameOptions.height])
+// }
 
 var gameBoard = d3.select('.board').append('svg:svg')
                 .attr('width', gameOptions.width)
                 .attr('height', gameOptions.height)
-                .style('border', '1px solid black');
+                .style('border', ' 1px solid');
 
 //helper functions
 var updateCurrentScore = function(){
@@ -50,13 +50,6 @@ var randomXCoordinate = function(){
 // Setup the game
 var player = new Player();
 
-// Doges
-var Doge = function(id){
-  this.id = id;
-  this._x = randomXCoordinate();
-  this._y = randomYCoordinate();
-}
-
 var createEnemies = function(){
   var enemyArray = [];
   for(var i = 0; i < gameOptions.nEnemies; i++){
@@ -67,20 +60,53 @@ var createEnemies = function(){
 
 var enemies = createEnemies();
 
+var tweenFunc = function(d,i){
+
+  var checkCollisions = function(playerCoords, enemyCoords){
+    var aSq = Math.pow(Math.abs(playerCoords[0]-enemyCoords[0]),2);
+    var bSq = Math.pow(Math.abs(playerCoords[1]-enemyCoords[1]),2);
+    var c = Math.sqrt(aSq+bSq);
+    //console.log(c);
+    if(c<30){ 
+      player.wasHit = true;
+    }
+    
+  };
+
+  return function(){
+
+    doge = gameBoard.select("[id='doge" + i + "']");
+    checkCollisions(player.getCoordinates(), [doge.attr('x'),doge.attr('y')]);
+
+
+  }
+};
+
   
 //Add enemies to the screen, make them fly around
 var update = function(){
+  
+    if(player.wasHit){
+      gameStats.collisions++;
+      updateCollisions();
+      updateHighScore();
+      gameStats.currentScore = 0;
+      updateCurrentScore();
+      player.wasHit = false
+    }
   var selection = gameBoard.selectAll('.doge')
-    .data(enemies, function(d){return d.id;});
+    .data(enemies, function(d){return d.id});
   
   selection.transition()
     .duration(1600)
+    .tween('custom', tweenFunc)
     .attr("x", function(d){return d._x;})
     .attr("y", function(d){return d._y;})
    // .tween('.doge', function(d){console.log(d)};)
 
   selection.enter().append('svg:image')
     .attr("xlink:href", function(d){return d.path;})
+    .attr("id", function(d){return "doge"+d.id})
     .attr("height", "24.5")
     .attr("width", "23")
     .attr("x", function(d){return d._x;})
@@ -90,13 +116,21 @@ var update = function(){
 
 }
 
+
 var fly = function(){
   setTimeout(function(){fly()}, 2000);
   update();
 }
 
-fly();
+var updateScore = function(){
+  setTimeout(function(){updateScore()}, 100);
+  gameStats.currentScore++;
+  updateCurrentScore();
+}
 
+
+fly();
+updateScore();
 
 
 

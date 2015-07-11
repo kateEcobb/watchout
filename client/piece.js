@@ -10,11 +10,11 @@ var Piece = function(path){
 
 Piece.prototype.setCoordinates = function(coordinateArr){
 
-  var minX = gameOptions.padding;
-  var maxX = gameOptions.width - gameOptions.padding;
+  var minX = 0;
+  var maxX = gameOptions.width - 30;
 
-  var minY = gameOptions.padding;
-  var maxY = gameOptions.height - gameOptions.padding;
+  var minY = 0;
+  var maxY = gameOptions.height - 50;
   //debugger;
   if(coordinateArr[0] <= minX){
     this._x = minX;
