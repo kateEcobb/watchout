@@ -4,7 +4,7 @@ var gameOptions = {
   height: 450,
   width: 700,
   padding: 20,
-  nEnemies: 10
+  nEnemies: 3
 };
 
 var gameStats = {
@@ -67,13 +67,17 @@ var createEnemies = function(){
 
 var enemies = createEnemies();
 
+  
+//Add enemies to the screen, make them fly around
 var update = function(){
   var selection = gameBoard.selectAll('.doge')
     .data(enemies, function(d){return d.id;});
   
-  selection.transition().duration(1600)
+  selection.transition()
+    .duration(1600)
     .attr("x", function(d){return d._x;})
     .attr("y", function(d){return d._y;})
+   // .tween('.doge', function(d){console.log(d)};)
 
   selection.enter().append('svg:image')
     .attr("xlink:href", function(d){return d.path;})

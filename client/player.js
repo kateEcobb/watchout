@@ -1,7 +1,7 @@
 var Player = function(){
   //this.path = "m2.5,40.5l10.12658,-38l21.87342,34.06897l-32,3.93103z";
   
-  Piece.call(this, "m2.5,40.5l10.12658,-38l21.87342,34.06897l-32,3.93103z");
+  Piece.call(this, "marcus.png");
   this.startingPos = [gameOptions.width/2, gameOptions.height/2];
 
 

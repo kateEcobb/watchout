@@ -2,9 +2,6 @@ var Piece = function(path){
   this._x = 0;
   this._y =0;
   this._r = 5; 
-  this.fill = 'blue';
-  this.stroke = 'red';
-  this.strokeWidth="2";
   
   this.path = path;
   this.pieceElement = null;
@@ -42,11 +39,10 @@ Piece.prototype.getCoordinates = function(){
 }
 
 Piece.prototype.render = function(){ 
-  this.pieceElement = gameBoard.append('svg:path')
-            .attr('d', this.path)
-            .attr('fill', this.fill)
-            .attr('stroke', this.stroke)
-            .attr('stroke-width', this.strokeWidth);
+  this.pieceElement = gameBoard.append('svg:image')
+            .attr("xlink:href", this.path)
+            .attr("height", "50")
+            .attr("width", "30")
 
   this.transform(this.startingPos);
 };
